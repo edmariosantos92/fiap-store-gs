@@ -1,0 +1,31 @@
+# Namespaces da FIAP Store.
+# store-prod: Pod Security "restricted" em enforce (F4).
+# store-data: tambem "restricted" (ponto extra): Postgres e Redis rodam como nao-root.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: store-prod
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: store-data
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+---
+# Namespace do DaemonSet de metricas (node-exporter). Precisa ler /proc e /sys do no,
+# por isso fica fora dos namespaces da aplicacao, com Pod Security "privileged".
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observabilidade
+  labels:
+    pod-security.kubernetes.io/enforce: privileged

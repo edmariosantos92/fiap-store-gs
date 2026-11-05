@@ -1,0 +1,24 @@
+# A store-api le o objeto Node em que foi agendada para descobrir a zona.
+# "nodes" e recurso de CLUSTER: precisa de ClusterRole + ClusterRoleBinding (F1).
+# Apenas get/list/watch em nodes: nenhum acesso a Secrets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: store-api-node-reader
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: store-api-node-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: store-api-node-reader
+subjects:
+  - kind: ServiceAccount
+    name: store-api
+    namespace: store-prod

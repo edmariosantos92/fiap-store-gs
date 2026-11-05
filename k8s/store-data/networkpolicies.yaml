@@ -1,0 +1,64 @@
+# Rede do namespace store-data (C5, C6).
+# 1) Nega TODA entrada por padrao.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: store-data
+spec:
+  podSelector: {}
+  policyTypes: ["Ingress"]
+---
+# 2) Banco: so a API, o worker, o Job de migracao e o CronJob de relatorio.
+#    O store-front NAO esta na lista: nao alcanca o banco.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-db-from-backend
+  namespace: store-data
+spec:
+  podSelector:
+    matchLabels:
+      app: store-db
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: store-prod
+          podSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values: ["store-api", "store-worker", "db-migrate", "store-report"]
+      ports:
+        - protocol: TCP
+          port: 5432
+---
+# 3) Redis: a API (enfileira), o worker (consome) e o operador do KEDA (mede a fila).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-redis-from-backend
+  namespace: store-data
+spec:
+  podSelector:
+    matchLabels:
+      app: store-redis
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: store-prod
+          podSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values: ["store-api", "store-worker"]
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: keda
+      ports:
+        - protocol: TCP
+          port: 6379

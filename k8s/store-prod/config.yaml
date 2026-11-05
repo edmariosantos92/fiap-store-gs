@@ -1,0 +1,17 @@
+# Configuracao nao sensivel da store-api, do worker e dos Jobs (D3).
+# A senha NAO esta aqui: vem do Secret store-db-credentials montado como arquivo.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: store-api-config
+  namespace: store-prod
+data:
+  APP_ENV: producao
+  DB_HOST: store-db.store-data.svc.cluster.local
+  DB_PORT: "5432"
+  DB_NAME: fiapstore
+  DB_USER: fiapstore
+  DB_PASSWORD_FILE: /etc/db-secret/password
+  REDIS_HOST: store-redis.store-data.svc.cluster.local
+  REDIS_PORT: "6379"
+  QUEUE_NAME: pedidos

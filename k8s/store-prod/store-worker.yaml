@@ -1,0 +1,91 @@
+# Processador de pedidos: escala de 0 a 5 pelo tamanho da fila Redis "pedidos" (KEDA, G1).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-worker
+  namespace: store-prod
+  labels:
+    app: store-worker
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  # Sem "replicas": quem decide e o KEDA (0 a 5).
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: store-worker
+  template:
+    metadata:
+      labels:
+        app: store-worker
+    spec:
+      serviceAccountName: store-worker
+      automountServiceAccountToken: false   # nenhuma permissao na API do Kubernetes (F2)
+      terminationGracePeriodSeconds: 30     # termina o pedido em andamento ao receber SIGTERM
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: store-worker
+          image: store-worker:1.0   # registro e tag definidos em k8s/kustomization.yaml
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: store-api-config
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PROCESS_SECONDS
+              value: "2"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: db-secret
+              mountPath: /etc/db-secret
+              readOnly: true
+      volumes:
+        - name: db-secret
+          secret:
+            secretName: store-db-credentials
+            defaultMode: 0440
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: store-worker
+  namespace: store-prod
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  scaleTargetRef:
+    name: store-worker
+  minReplicaCount: 0          # desliga por completo sem fila
+  maxReplicaCount: 5
+  pollingInterval: 5
+  cooldownPeriod: 30
+  triggers:
+    - type: redis
+      metadata:
+        address: store-redis.store-data.svc.cluster.local:6379
+        listName: pedidos
+        listLength: "5"         # 1 replica para cada 5 pedidos na fila
+        activationListLength: "0"

@@ -1,0 +1,39 @@
+# Pasta sincronizada pelo Argo CD (argocd/application.yaml).
+# O Argo CD detecta este arquivo e renderiza tudo com Kustomize.
+#
+# ROLLOUT / ROLLBACK POR GITOPS: troque o newTag da store-api (1.0 <-> 2.0),
+# faca commit e push. O Argo CD aplica sozinho.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # recursos de cluster
+  - cluster/namespaces.yaml
+  - cluster/storageclass.yaml
+  - cluster/rbac-cluster.yaml
+  # dados
+  - store-data/networkpolicies.yaml
+  - store-data/store-db.yaml
+  - store-data/store-redis.yaml
+  # aplicacao
+  - store-prod/config.yaml
+  - store-prod/quota.yaml
+  - store-prod/rbac.yaml
+  - store-prod/jobs.yaml
+  - store-prod/store-api.yaml
+  - store-prod/store-worker.yaml
+  - store-prod/store-front.yaml
+  - store-prod/ingress.yaml
+  # daemon de metricas
+  - observabilidade/node-exporter.yaml
+
+images:
+  - name: store-api
+    newName: 992859658230.dkr.ecr.us-east-1.amazonaws.com/store-api
+    newTag: "1.0"
+  - name: store-worker
+    newName: 992859658230.dkr.ecr.us-east-1.amazonaws.com/store-worker
+    newTag: "1.0"
+  - name: store-front
+    newName: 992859658230.dkr.ecr.us-east-1.amazonaws.com/store-front
+    newTag: "1.0"

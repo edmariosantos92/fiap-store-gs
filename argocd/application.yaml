@@ -1,0 +1,30 @@
+# Application do Argo CD (G2): o estado do cluster e o que esta em k8s/.
+#   kubectl apply -f argocd/application.yaml
+# prune: apaga do cluster o que saiu do Git | selfHeal: desfaz mudancas manuais.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fiap-store
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/edmariosantos92/fiap-store-gs.git
+    targetRevision: main
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
+      - ApplyOutOfSyncOnly=true
+    # HPA e ScaledObject aparecem degradados nos primeiros segundos: tenta de novo.
+    retry:
+      limit: 10
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m

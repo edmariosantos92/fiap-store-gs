@@ -1,0 +1,35 @@
+# Limites do namespace store-prod (C7).
+# Dimensionado para o pico: store-api 6 (+1 surge), worker 5, front 2 (+1 surge), Jobs.
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: store-prod-quota
+  namespace: store-prod
+spec:
+  hard:
+    pods: "30"
+    requests.cpu: "3"
+    requests.memory: 3Gi
+    limits.cpu: "8"
+    limits.memory: 6Gi
+    services.loadbalancers: "0"
+    services.nodeports: "0"
+---
+# Valores padrao para qualquer conteiner sem resources (exigidos pela quota).
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: store-prod-limits
+  namespace: store-prod
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: 200m
+        memory: 256Mi
+      defaultRequest:
+        cpu: 50m
+        memory: 64Mi
+      max:
+        cpu: "1"
+        memory: 1Gi

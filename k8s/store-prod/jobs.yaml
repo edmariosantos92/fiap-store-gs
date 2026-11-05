@@ -1,0 +1,130 @@
+# Migracao do banco (E1): mesma imagem da store-api, outro comando.
+# Hook de Sync do Argo CD: Job e imutavel, entao o Argo recria a cada sync
+# (BeforeHookCreation). Sem ttlSecondsAfterFinished: o Job precisa EXISTIR na correcao.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+  namespace: store-prod
+  labels:
+    app: db-migrate
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  backoffLimit: 4
+  activeDeadlineSeconds: 600
+  template:
+    metadata:
+      labels:
+        app: db-migrate
+    spec:
+      restartPolicy: OnFailure
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: db-migrate
+          image: store-api:1.0
+          command: ["python", "-m", "app.migrate"]
+          envFrom:
+            - configMapRef:
+                name: store-api-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: db-secret
+              mountPath: /etc/db-secret
+              readOnly: true
+      volumes:
+        - name: db-secret
+          secret:
+            secretName: store-db-credentials
+            defaultMode: 0440
+---
+# Relatorio consolidado de vendas (E2): mesma imagem do worker, a cada 5 minutos.
+# Disparo sob demanda: kubectl -n store-prod create job --from=cronjob/store-report relatorio-agora
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: store-report
+  namespace: store-prod
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            app: store-report
+        spec:
+          restartPolicy: OnFailure
+          automountServiceAccountToken: false
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            fsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: store-report
+              image: store-worker:1.0
+              command: ["python", "-m", "worker.relatorio"]
+              envFrom:
+                - configMapRef:
+                    name: store-api-config
+              env:
+                - name: POD_NAME
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  cpu: 200m
+                  memory: 128Mi
+              securityContext:
+                runAsNonRoot: true
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+                seccompProfile:
+                  type: RuntimeDefault
+              volumeMounts:
+                - name: db-secret
+                  mountPath: /etc/db-secret
+                  readOnly: true
+          volumes:
+            - name: db-secret
+              secret:
+                secretName: store-db-credentials
+                defaultMode: 0440

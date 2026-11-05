@@ -1,0 +1,118 @@
+# Banco PostgreSQL da FIAP Store (D1, D2).
+# A senha vem do Secret store-db-credentials (chave "password"), criado direto no cluster
+# com kubectl - nunca no Git. Ver README, secao "Secrets".
+apiVersion: v1
+kind: Service
+metadata:
+  name: store-db
+  namespace: store-data
+  labels:
+    app: store-db
+spec:
+  type: ClusterIP            # interno apenas (C2)
+  selector:
+    app: store-db
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: store-db
+  namespace: store-data
+  labels:
+    app: store-db
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  serviceName: store-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: store-db
+  template:
+    metadata:
+      labels:
+        app: store-db
+    spec:
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 70          # usuario "postgres" da imagem alpine
+        runAsGroup: 70
+        fsGroup: 70            # o volume EBS fica gravavel pelo grupo 70
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - name: postgres
+              containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: fiapstore
+            - name: POSTGRES_USER
+              value: fiapstore
+            - name: POSTGRES_PASSWORD_FILE
+              value: /etc/db-secret/password
+            # A raiz do volume EBS tem "lost+found": os dados ficam num subdiretorio.
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U fiapstore -d fiapstore -h 127.0.0.1"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U fiapstore -d fiapstore -h 127.0.0.1"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: db-secret
+              mountPath: /etc/db-secret
+              readOnly: true
+            - name: run
+              mountPath: /var/run/postgresql
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: db-secret
+          secret:
+            secretName: store-db-credentials
+            defaultMode: 0440
+        - name: run
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: data           # PVC resultante: data-store-db-0
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: gp3
+        resources:
+          requests:
+            storage: 5Gi

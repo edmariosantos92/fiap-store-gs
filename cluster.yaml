@@ -1,0 +1,34 @@
+# Cluster EKS da FIAP Store (AWS Academy Learner Lab)
+#   eksctl create cluster -f cluster.yaml          # 15 a 20 minutos
+#   eksctl delete cluster -f cluster.yaml --disable-nodegroup-eviction
+# Troque 992859658230 pelo ID da conta do Learner Lab de quem for criar o cluster.
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: fiap-store
+  region: us-east-1
+  version: "1.35"            # versao em suporte padrao: versoes antigas custam 6x mais
+iam:
+  withOIDC: false            # Learner Lab nao permite provedor OIDC (sem IRSA)
+  serviceRoleARN: arn:aws:iam::992859658230:role/LabRole
+availabilityZones: ["us-east-1a", "us-east-1b", "us-east-1c"]
+vpc:
+  nat:
+    gateway: Disable         # sem NAT Gateway: nos em subnets publicas (custo)
+addons:
+  - name: vpc-cni
+    configurationValues: '{"enableNetworkPolicy": "true"}'   # sem isto, NetworkPolicy e ignorada
+  - name: coredns
+  - name: kube-proxy
+  - name: aws-ebs-csi-driver
+  - name: metrics-server
+managedNodeGroups:
+  - name: ng-principal
+    instanceType: t3.medium   # maximo de 17 Pods por no: este projeto precisa de 4 nos
+    minSize: 4
+    desiredCapacity: 4
+    maxSize: 5
+    privateNetworking: false
+    volumeSize: 20
+    iam:
+      instanceRoleARN: arn:aws:iam::992859658230:role/LabRole

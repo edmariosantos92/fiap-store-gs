@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.pem
+*.key
+*.crt
+kubeconfig*
+
+# segredos e artefatos locais: nunca no Git
+*.pem
+*.key
+*.crt
+*secret*.yaml
+!k8s/**
+.aws/
