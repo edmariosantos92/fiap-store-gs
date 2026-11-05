@@ -30,7 +30,7 @@ resources:
 images:
   - name: store-api
     newName: 992859658230.dkr.ecr.us-east-1.amazonaws.com/store-api
-    newTag: "1.0"
+    newTag: "2.0"
   - name: store-worker
     newName: 992859658230.dkr.ecr.us-east-1.amazonaws.com/store-worker
     newTag: "1.0"
