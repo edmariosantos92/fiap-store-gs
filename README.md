@@ -166,6 +166,11 @@ kubectl -n store-prod create job --from=cronjob/store-report relatorio-agora   #
 ./avaliacao/verifica-gs.sh "https://$LB"
 ```
 
+> **Windows (Git Bash):** rode `export MSYS_NO_PATHCONV=1` antes do script, senão o Git Bash
+> converte `--raw=/readyz` em caminho do Windows e o script diz que não fala com o cluster.
+> Se houver variáveis `AWS_ACCESS_KEY_ID`/`AWS_SESSION_TOKEN` antigas no ambiente, elas têm
+> prioridade sobre `~/.aws/credentials`: `unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN`.
+
 Interface do Argo CD (opcional):
 
 ```bash
