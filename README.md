@@ -13,9 +13,8 @@ em `k8s/`, entrega por GitOps (Argo CD), segurança e escalonamento.
 
 | Nome | RM | Papel |
 |---|---|---|
-| Edmário Souza Santos | RM_____ | Plataforma |
-| _preencher_ | RM_____ | Aplicação |
-| _preencher_ | RM_____ | Segurança |
+| Edmário Souza Santos | RM565486 | Plataforma e Segurança |
+| Pedro Gonçalves | RM561506 | Aplicação |
 
 **Argo CD Application:** `fiap-store` (namespace `argocd`) — sincroniza a pasta
 [`k8s/`](k8s/) deste repositório: <https://github.com/edmariosantos92/fiap-store-gs/tree/main/k8s>
