@@ -1,0 +1,305 @@
+
+Report Summary
+
+┌──────────────────────────────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+│                                    Target                                    │  Type  │ Vulnerabilities │ Secrets │
+├──────────────────────────────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+│ 992859658230.dkr.ecr.us-east-1.amazonaws.com/store-front:1.0 (alpine 3.23.3) │ alpine │       75        │    -    │
+└──────────────────────────────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+992859658230.dkr.ecr.us-east-1.amazonaws.com/store-front:1.0 (alpine 3.23.3)
+============================================================================
+Total: 75 (HIGH: 71, CRITICAL: 4)
+
+┌──────────────┬─────────────────┬──────────┬────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
+│   Library    │  Vulnerability  │ Severity │ Status │ Installed Version │ Fixed Version │                            Title                             │
+├──────────────┼─────────────────┼──────────┼────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ brotli-libs  │ CVE-2026-111497 │ CRITICAL │ fixed  │ 1.2.0-r0          │ 1.2.1-r0      │ brotli: Out-of-Bounds Write in Google Brotli Decoder         │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-111497                  │
+├──────────────┼─────────────────┼──────────┤        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ c-ares       │ CVE-2026-33630  │ HIGH     │        │ 1.34.6-r0         │ 1.34.8-r0     │ c-ares: c-ares: Use-after-free / double-free in              │
+│              │                 │          │        │                   │               │ query-completion handling                                    │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-33630                   │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ curl         │ CVE-2026-11352  │          │        │ 8.17.0-r1         │ 8.22.0-r0     │ curl: libcurl: curl/libcurl: Remote denial of service via    │
+│              │                 │          │        │                   │               │ QUIC UDP receive function...                                 │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-11352                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-11586  │          │        │                   │               │ curl: curl: Denial of Service via WebSocket PING flood       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-11586                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-12064  │          │        │                   │               │ curl: curl: SSH host verification bypass when using          │
+│              │                 │          │        │                   │               │ schemeless URLs with SFTP/SCP...                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-12064                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-5773   │          │        │                   │ 8.20.0-r0     │ curl: libcurl: Wrong file transfer due to incorrect SMB      │
+│              │                 │          │        │                   │               │ connection reuse                                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-5773                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-6276   │          │        │                   │               │ curl: libcurl: Information disclosure due to cookie leak     │
+│              │                 │          │        │                   │               │ when reusing connections with...                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-6276                    │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8286   │          │        │                   │ 8.22.0-r0     │ curl: curl: Insecure connection establishment due to TLS     │
+│              │                 │          │        │                   │               │ configuration mismatch                                       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8286                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8458   │          │        │                   │               │ curl: libcurl: Unauthorized connection reuse due to a        │
+│              │                 │          │        │                   │               │ logical error                                                │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8458                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8925   │          │        │                   │               │ curl: curl: Double-free vulnerability in SASL authentication │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8925                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8927   │          │        │                   │               │ curl: Information disclosure due to uncleared proxy          │
+│              │                 │          │        │                   │               │ authentication state                                         │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8927                    │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-92392  │          │        │                   │ 8.23.0-r0     │ curl: curl: HTTP/2 upload Use-After-Free                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-92392                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-9547   │          │        │                   │ 8.22.0-r0     │ curl: curl: Man-in-the-middle attack via SSH host key bypass │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-9547                    │
+├──────────────┼─────────────────┼──────────┤        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libcrypto3   │ CVE-2026-31789  │ CRITICAL │        │ 3.5.5-r0          │ 3.5.6-r0      │ openssl: OpenSSL: Heap buffer overflow on 32-bit systems     │
+│              │                 │          │        │                   │               │ from large X.509 certificate...                              │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-31789                   │
+│              ├─────────────────┼──────────┤        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-14456  │ HIGH     │        │                   │ 3.5.8-r0      │ openssl: OpenSSL: Denial of Service via unbounded memory     │
+│              │                 │          │        │                   │               │ growth in QUIC server...                                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-14456                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28387  │          │        │                   │ 3.5.6-r0      │ openssl: OpenSSL: Arbitrary code execution due to            │
+│              │                 │          │        │                   │               │ use-after-free in DANE TLSA authentication...                │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28387                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28388  │          │        │                   │               │ openssl: OpenSSL: Denial of Service due to NULL pointer      │
+│              │                 │          │        │                   │               │ dereference in delta...                                      │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28388                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28389  │          │        │                   │               │ openssl: OpenSSL: Denial of Service vulnerability in CMS     │
+│              │                 │          │        │                   │               │ processing                                                   │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28389                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28390  │          │        │                   │               │ openssl: OpenSSL: Denial of Service due to NULL pointer      │
+│              │                 │          │        │                   │               │ dereference in CMS...                                        │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28390                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-45447  │          │        │                   │ 3.5.7-r0      │ openssl: Heap Use-After-Free in OpenSSL PKCS7_verify()       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-45447                   │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libcurl      │ CVE-2026-11352  │          │        │ 8.17.0-r1         │ 8.22.0-r0     │ curl: libcurl: curl/libcurl: Remote denial of service via    │
+│              │                 │          │        │                   │               │ QUIC UDP receive function...                                 │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-11352                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-11586  │          │        │                   │               │ curl: curl: Denial of Service via WebSocket PING flood       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-11586                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-12064  │          │        │                   │               │ curl: curl: SSH host verification bypass when using          │
+│              │                 │          │        │                   │               │ schemeless URLs with SFTP/SCP...                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-12064                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-5773   │          │        │                   │ 8.20.0-r0     │ curl: libcurl: Wrong file transfer due to incorrect SMB      │
+│              │                 │          │        │                   │               │ connection reuse                                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-5773                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-6276   │          │        │                   │               │ curl: libcurl: Information disclosure due to cookie leak     │
+│              │                 │          │        │                   │               │ when reusing connections with...                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-6276                    │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8286   │          │        │                   │ 8.22.0-r0     │ curl: curl: Insecure connection establishment due to TLS     │
+│              │                 │          │        │                   │               │ configuration mismatch                                       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8286                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8458   │          │        │                   │               │ curl: libcurl: Unauthorized connection reuse due to a        │
+│              │                 │          │        │                   │               │ logical error                                                │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8458                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8925   │          │        │                   │               │ curl: curl: Double-free vulnerability in SASL authentication │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8925                    │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-8927   │          │        │                   │               │ curl: Information disclosure due to uncleared proxy          │
+│              │                 │          │        │                   │               │ authentication state                                         │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-8927                    │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-92392  │          │        │                   │ 8.23.0-r0     │ curl: curl: HTTP/2 upload Use-After-Free                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-92392                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-9547   │          │        │                   │ 8.22.0-r0     │ curl: curl: Man-in-the-middle attack via SSH host key bypass │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-9547                    │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libexpat     │ CVE-2026-113351 │          │        │ 2.7.4-r0          │ 2.10.0-r0     │ expat: expat: Denial of Service via improper memory tracking │
+│              │                 │          │        │                   │               │ in XML_ParserReset                                           │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-113351                  │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-117610 │          │        │                   │               │ expat: expat: Denial of Service via NULL pointer dereference │
+│              │                 │          │        │                   │               │ in external entity...                                        │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-117610                  │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-118370 │          │        │                   │               │ expat: expat: Denial of Service via integer overflow during  │
+│              │                 │          │        │                   │               │ XML attribute parsing...                                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-118370                  │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-45186  │          │        │                   │ 2.8.1-r0      │ libexpat: denial of service via crafted XML input            │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-45186                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-66046  │          │        │                   │ 2.8.4-r0      │ expat: Expat: Denial of Service via quadratic complexity in  │
+│              │                 │          │        │                   │               │ attribute processing                                         │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-66046                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-76641  │          │        │                   │               │ expat: Expat: Denial of Service via XML external entity      │
+│              │                 │          │        │                   │               │ parsing                                                      │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-76641                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-76956  │          │        │                   │               │ libexpat: libexpat: Denial of Service via hash flooding      │
+│              │                 │          │        │                   │               │ attack with crafted XML...                                   │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-76956                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-76957  │          │        │                   │               │ libexpat: libexpat: Memory corruption vulnerability allows   │
+│              │                 │          │        │                   │               │ arbitrary code execution or denial of...                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-76957                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-77214  │          │        │                   │ 2.9.0-r0      │ expat: expat: Information disclosure via heap buffer         │
+│              │                 │          │        │                   │               │ over-read in XML_ParseBuffer                                 │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-77214                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-93990  │          │        │                   │ 2.8.5-r0      │ expat: Expat: XML Injection via Malformed UTF-16 Input       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-93990                   │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libpng       │ CVE-2026-25646  │          │        │ 1.6.54-r0         │ 1.6.55-r0     │ libpng: LIBPNG has a heap buffer overflow in                 │
+│              │                 │          │        │                   │               │ png_set_quantize                                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-25646                   │
+├──────────────┼─────────────────┼──────────┤        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libssl3      │ CVE-2026-31789  │ CRITICAL │        │ 3.5.5-r0          │ 3.5.6-r0      │ openssl: OpenSSL: Heap buffer overflow on 32-bit systems     │
+│              │                 │          │        │                   │               │ from large X.509 certificate...                              │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-31789                   │
+│              ├─────────────────┼──────────┤        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-14456  │ HIGH     │        │                   │ 3.5.8-r0      │ openssl: OpenSSL: Denial of Service via unbounded memory     │
+│              │                 │          │        │                   │               │ growth in QUIC server...                                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-14456                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28387  │          │        │                   │ 3.5.6-r0      │ openssl: OpenSSL: Arbitrary code execution due to            │
+│              │                 │          │        │                   │               │ use-after-free in DANE TLSA authentication...                │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28387                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28388  │          │        │                   │               │ openssl: OpenSSL: Denial of Service due to NULL pointer      │
+│              │                 │          │        │                   │               │ dereference in delta...                                      │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28388                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28389  │          │        │                   │               │ openssl: OpenSSL: Denial of Service vulnerability in CMS     │
+│              │                 │          │        │                   │               │ processing                                                   │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28389                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-28390  │          │        │                   │               │ openssl: OpenSSL: Denial of Service due to NULL pointer      │
+│              │                 │          │        │                   │               │ dereference in CMS...                                        │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-28390                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-45447  │          │        │                   │ 3.5.7-r0      │ openssl: Heap Use-After-Free in OpenSSL PKCS7_verify()       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-45447                   │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libuuid      │ CVE-2026-53612  │          │        │ 2.41.2-r0         │ 2.41.6-r0     │ util-linux: util-linux: TOCTOU in the mount program when     │
+│              │                 │          │        │                   │               │ applying post-mount ownership/mode changes...                │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-53612                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-53613  │          │        │                   │               │ util-linux: TOCTOU in the mount program via ancestor         │
+│              │                 │          │        │                   │               │ directory swap on target...                                  │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-53613                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-53614  │          │        │                   │               │ util-linux: util-linux: SUID mount(8) allows nosuid/noexec   │
+│              │                 │          │        │                   │               │ bypass via LIBMOUNT_FORCE_MOUNT2                             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-53614                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-76642  │          │        │                   │               │ util-linux: util-linux: failed external mount helper still   │
+│              │                 │          │        │                   │               │ runs privileged X-mount post-hooks                           │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-76642                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-78408  │          │        │                   │ 2.41.6-r1     │ util-linux: util-linux: nsenter --join-cgroup leaks root     │
+│              │                 │          │        │                   │               │ cgroup migration authority                                   │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-78408                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-78410  │          │        │                   │ 2.41.6-r0     │ util-linux: util-linux: restricted bind mounts do not pin    │
+│              │                 │          │        │                   │               │ the source, allowing X-mount.owner/group/mode...             │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-78410                   │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libxml2      │ CVE-2026-6732   │          │        │ 2.13.9-r0         │ 2.13.9-r1     │ libxml2: libxml2: Denial of Service via crafted              │
+│              │                 │          │        │                   │               │ XSD-validated document                                       │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-6732                    │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ musl         │ CVE-2026-40200  │          │        │ 1.2.5-r21         │ 1.2.5-r23     │ musl: musl libc: Arbitrary code execution and denial of      │
+│              │                 │          │        │                   │               │ service via stack-based...                                   │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-40200                   │
+├──────────────┤                 │          │        │                   │               │                                                              │
+│ musl-utils   │                 │          │        │                   │               │                                                              │
+│              │                 │          │        │                   │               │                                                              │
+│              │                 │          │        │                   │               │                                                              │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ nghttp2-libs │ CVE-2026-27135  │          │        │ 1.68.0-r0         │ 1.68.1        │ nghttp2: nghttp2: Denial of Service via malformed HTTP/2     │
+│              │                 │          │        │                   │               │ frames after session termination...                          │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-27135                   │
+├──────────────┼─────────────────┼──────────┤        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ nginx        │ CVE-2026-42945  │ CRITICAL │        │ 1.28.2-r1         │ 1.28.3-r1     │ nginx: NGINX: Arbitrary Code Execution Vulnerability         │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-42945                   │
+│              ├─────────────────┼──────────┤        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-27651  │ HIGH     │        │                   │ 1.28.3-r0     │ NGINX: NGINX: Denial of Service via undisclosed requests     │
+│              │                 │          │        │                   │               │ when ngx_mail_auth_http_module is enabled...                 │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-27651                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-27654  │          │        │                   │               │ NGINX: NGINX: Denial of Service or file modification via     │
+│              │                 │          │        │                   │               │ buffer overflow in...                                        │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-27654                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-32647  │          │        │                   │               │ nginx: NGINX: Denial of Service or Code Execution via        │
+│              │                 │          │        │                   │               │ specially crafted MP4...                                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-32647                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-42055  │          │        │                   │ 1.28.3-r4     │ nginx: NGINX: Arbitrary code execution or Denial of Service  │
+│              │                 │          │        │                   │               │ via heap-based buffer...                                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-42055                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-42533  │          │        │                   │ 1.28.3-r6     │ nginx: NGINX: Arbitrary code execution via crafted HTTP      │
+│              │                 │          │        │                   │               │ requests                                                     │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-42533                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-42946  │          │        │                   │ 1.28.3-r1     │ nginx: ngx_http_scgi_module: ngx_http_uwsgi_module:          │
+│              │                 │          │        │                   │               │ information disclosure and denial of service                 │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-42946                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-49975  │          │        │                   │ 1.28.3-r3     │ httpd: httpd: HTTP/2 Remote Denial of Service via            │
+│              │                 │          │        │                   │               │ compression bomb and Slowloris-style...                      │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-49975                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-60005  │          │        │                   │ 1.28.3-r6     │ nginx: NGINX: Memory disclosure and denial of service in     │
+│              │                 │          │        │                   │               │ ngx_http_slice_module                                        │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-60005                   │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-9256   │          │        │                   │ 1.28.3-r2     │ nginx: ngx_http_rewrite_module: code execution and denial of │
+│              │                 │          │        │                   │               │ service                                                      │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-9256                    │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ pcre2        │ CVE-2026-103111 │          │        │ 10.47-r0          │ 10.49-r0      │ pcre2: pcre2: Out-of-bounds write via crafted regular        │
+│              │                 │          │        │                   │               │ expression                                                   │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-103111                  │
+│              ├─────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-86145  │          │        │                   │ 10.48-r0      │ pcre2: PCRE2: Out-of-bounds write allows arbitrary code      │
+│              │                 │          │        │                   │               │ execution via crafted regular expressions...                 │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-86145                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-89157  │          │        │                   │               │ pcre2: PCRE2: Out-of-bounds write via large pattern input    │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-89157                   │
+│              ├─────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│              │ CVE-2026-89161  │          │        │                   │               │ pcre2: PCRE2: Memory corruption vulnerability in             │
+│              │                 │          │        │                   │               │ pcre2_jit_match                                              │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-89161                   │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ tiff         │ CVE-2026-4775   │          │        │ 4.7.1-r0          │ 4.7.2-r0      │ libtiff: libtiff: Arbitrary code execution or denial of      │
+│              │                 │          │        │                   │               │ service via signed integer...                                │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-4775                    │
+├──────────────┼─────────────────┤          │        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ zlib         │ CVE-2026-22184  │          │        │ 1.3.1-r2          │ 1.3.2-r0      │ zlib: zlib: Arbitrary code execution via buffer overflow in  │
+│              │                 │          │        │                   │               │ untgz utility                                                │
+│              │                 │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-22184                   │
+└──────────────┴─────────────────┴──────────┴────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘
