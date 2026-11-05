@@ -127,7 +127,10 @@ unset SENHA
 LB=$(kubectl -n traefik get svc traefik -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 openssl req -x509 -nodes -newkey rsa:2048 -days 30 \
   -keyout /tmp/tls.key -out /tmp/tls.crt \
-  -subj "/CN=$LB" -addext "subjectAltName=DNS:$LB"
+  -subj "/CN=fiap-store" -addext "subjectAltName=DNS:$LB"
+# CN aceita no maximo 64 caracteres e o hostname do ELB passa disso: o nome vai no subjectAltName,
+# que e o que o Traefik usa para escolher o certificado (SNI).
+# No Git Bash do Windows use -subj "//CN=fiap-store" (evita a conversao de caminho do MSYS).
 kubectl -n store-prod create secret tls store-tls --cert=/tmp/tls.crt --key=/tmp/tls.key
 rm -f /tmp/tls.key /tmp/tls.crt
 ```
