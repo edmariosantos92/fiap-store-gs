@@ -35,7 +35,6 @@ k8s/                         TODOS os manifestos (Kustomize) — pasta sincroniz
   store-prod/                ConfigMap, quota, RBAC, store-api (+HPA, PDB), store-front, store-worker
                              (+KEDA ScaledObject), Job db-migrate, CronJob store-report, Ingress
   observabilidade/           DaemonSet node-exporter (um Pod por nó)
-local/minikube/              overlay Kustomize para desenvolver no minikube
 avaliacao/verifica-gs.sh     script de correção do professor
 avaliacao/trivy/             relatório de scan das 3 imagens + justificativas
 .github/workflows/           CI: build, scan (Trivy) e push para o ECR
@@ -224,19 +223,6 @@ As imagens no ECR podem ficar (custo desprezível). Para apagar:
 | 8 | Drift | `kubectl -n store-prod delete service store-front` → o Argo CD recria em segundos |
 | 9 | Rede | `kubectl -n store-prod exec deploy/store-front -- nc -z -w 3 store-db.store-data.svc.cluster.local 5432` (falha) e `kubectl -n store-prod exec deploy/store-api -- python -c "import socket; socket.create_connection(('store-db.store-data.svc.cluster.local',5432),3); print('ok')"` (ok) |
 | 10 | Relatório sob demanda | `kubectl -n store-prod create job --from=cronjob/store-report relatorio-$(date +%s)` |
-
----
-
-## Desenvolvimento no minikube
-
-```bash
-minikube start --nodes 2 --cni calico --cpus 2 --memory 4g
-docker build -t store-api:1.0 store-api && docker build -t store-worker:1.0 store-worker \
-  && docker build -t store-front:1.0 store-front
-minikube image load store-api:1.0 store-worker:1.0 store-front:1.0
-kubectl apply -f k8s/cluster/namespaces.yaml     # depois crie os Secrets como no passo 5
-kubectl apply -k local/minikube                  # StorageClass "standard" e imagens locais
-```
 
 ---
 
